@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Your Cart</title>
+    <link rel="stylesheet" type="text/css" href="./css/cart.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet" />
+    <script type="text/javascript" src="js/formChecker.js"></script>
+</head>
+
+<body>
+    <!--Reference: https://github.com/Vikalp2502/Shopping-Cart-UI/blob/main/style.css-->
+    <div class="CartContainer" id="itemsContainer">
+        <div class="Header">
+            <h3 class="Heading">Your Cart</h3>
+            <h5 class="Action" onclick="clearCart()">Remove all</h5>
+        </div>
+
+        <script>
+            var cartItems = JSON.parse(localStorage.getItem("cart"));
+            console.log(cartItems);
+            if (cartItems.length == 0) {
+                var container = document.getElementById("itemsContainer");
+                var node = document.createElement("div");
+                node.className = "Cart-Items";
+                node.innerHTML =
+                    '<div class="about"><h1 class="title">Your Cart is Empty </h1></div>';
+                container.appendChild(node);
+            } else {
+                for (var item in cartItems) {
+                    var container = document.getElementById("itemsContainer");
+                    var node = document.createElement("div");
+                    node.className = "Cart-Items";
+                    node.id = cartItems[item].id;
+                    node.innerHTML =
+                        '<div class="about"><h1 class="title">' +
+                        cartItems[item].service +
+                        '</h1></div><div class="prices"><div class="amount">' +
+                        "BHD " +
+                        cartItems[item].cost +
+                        '</div><div class="remove"><u onclick="removeItem(this.parentElement.parentElement.parentElement)">Remove</u></div></div></div>';
+                    container.appendChild(node);
+                }
+            }
+        </script>
+        <hr />
+        <div class="checkout">
+            <div class="total">
+                <div>
+                    <div class="Subtotal">Sub-Total</div>
+                    <div class="items">
+                        <script>
+                            document.write(
+                                JSON.parse(localStorage.getItem("cart")).length + " items"
+                            );
+                        </script>
+                    </div>
+                </div>
+                <div class="total-amount">
+                    <script>
+                        console.log(cartItems);
+                        var totalCost = 0;
+                        for (var item in cartItems) {
+                            totalCost += cartItems[item].cost;
+                        }
+                        localStorage.setItem("totalCost", JSON.stringify(totalCost));
+                        document.write("BD " + totalCost);
+                    </script>
+                </div>
+            </div>
+
+            <a href="checkout.html"><button class="button">Checkout</button></a>
+        </div>
+        <a href="index.html">
+            <button class="button" style="width: 28%; margin-top: 6%; margin-left: 20px">
+          Go Back
+        </button>
+        </a>
+    </div>
+</body>
+
+</html>
