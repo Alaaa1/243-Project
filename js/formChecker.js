@@ -217,3 +217,107 @@ function checkPayment(e) {
     }
     window.location.href = "success.html";
 }
+
+function checkConferences(e) {
+    e.preventDefault();
+
+    var selectConference = document.getElementById("confNumber").value;
+    var checkInDate = new Date(document.getElementById("checkInDate").value);
+    var checkOutDate = new Date(document.getElementById("checkOutDate").value);
+    var tickets = document.getElementById("selectTickets").value;
+
+    //form validation from w3Schools: https://www.w3schools.com/js/js_validation.asp
+    if (selectConference == "" || checkInDate == "" || checkOutDate == "" || tickets == "") {
+        alert("All fields must be filled!");
+        return false;
+    }
+
+    var conferences = {
+        '01': {
+            name: 'CONFERENCE ON APPLIED SCIENCES',
+            price: 450
+        },
+        '02': {
+            name: 'CONFERENCE ON ICCES2022',
+            price: 600
+        },
+        '03': {
+            name: 'INTERNATIONAL CONFERENCE ON EDUCATION, PSYCHOLOGY AND HUMANITIES',
+            price: 250
+        },
+        '04': {
+            name: '13TH INTERNATIONAL CONFERENCE ON GREEN SUSTAINABLE CONSTRUCTIONS',
+            price: 310
+        }
+    }
+
+    if (tickets == "5p") {
+        tickets = 5;
+    }
+
+    var conference = conferences[selectConference];
+    var cost = 0;
+    var confPeriod = DateDiff.inDays(checkInDate, checkOutDate);
+
+    cost = conference.price * confPeriod * tickets;
+    cart.push({ id: generateID(), service: "Conference Ticket", cost: cost, conference: conferences[selectConference].name, from: checkInDate, to: checkOutDate });
+    console.log(cart)
+    alert("Your have successfully added the service to your cart!");
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function checkTour(e) {
+    e.preventDefault();
+
+    var selectTour = document.getElementById("selectTour").value;
+    var checkInDate = new Date(document.getElementById("checkInDate").value);
+    var checkOutDate = new Date(document.getElementById("checkOutDate").value);
+    var travelers = document.getElementById("travelers").value;
+
+    //form validation from w3Schools: https://www.w3schools.com/js/js_validation.asp
+    if (selectTour == "" || checkInDate == "" || checkOutDate == "" || travelers == "") {
+        alert("All fields must be filled!");
+        return false;
+    }
+
+    var tours = {
+        Atlanta: {
+            name: 'Atlanta',
+            price: 2200
+        },
+        Venice: {
+            name: 'Venice',
+            price: 1200
+        },
+        THESSALONIKI: {
+            name: 'THESSALONIKI',
+            price: 1800
+        },
+        Dallas: {
+            name: 'Dallas',
+            price: 1600
+        },
+        newYork: {
+            name: 'New York',
+            price: 1200
+        },
+        Paris: {
+            name: 'Paris',
+            price: 3000
+        }
+    }
+
+    if (travelers == "5p") {
+        travelers = 5;
+    }
+
+    var tour = tours[selectTour];
+    var cost = 0;
+    var tourPeriod = DateDiff.inDays(checkInDate, checkOutDate);
+
+    cost = tour.price * tourPeriod * travelers;
+    cart.push({ id: generateID(), service: "Tour", cost: cost, tour: tours[selectTour].name, from: checkInDate, to: checkOutDate });
+    console.log(cart)
+    alert("Your have successfully added the service to your cart!");
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
