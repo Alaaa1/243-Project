@@ -1,4 +1,4 @@
-var cart = [];
+var cart = JSON.parse(localStorage.getItem("cart")) ? JSON.parse(localStorage.getItem("cart")) : [];
 
 
 function generateID() {
